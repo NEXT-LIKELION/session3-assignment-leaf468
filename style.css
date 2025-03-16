@@ -1,0 +1,227 @@
+/* 기본 리셋 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: sans-serif;
+}
+
+/* ========== 헤더 영역 ========== */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 0 16px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+.header-left {
+    display: flex;
+    align-items: center;
+}
+.menu-icon {
+    font-size: 1.2rem;
+    margin-right: 16px;
+    cursor: pointer;
+}
+.logo {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* 검색창 */
+.search-bar {
+    display: flex;
+    flex: 1;
+    max-width: 600px;
+    margin: 0 16px;
+}
+.search-bar input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+}
+.search-bar button {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    background-color: #f8f8f8;
+    cursor: pointer;
+}
+
+/* 헤더 오른쪽 아이콘 영역 */
+.header-right {
+    display: flex;
+    align-items: center;
+}
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 16px;
+    padding: 0;
+}
+.icon-button img {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+/* ========== 메인 컨테이너 ========== */
+.container {
+    width: 100%;
+    display: flex;
+    min-height: calc(100vh - 60px); /* 헤더 높이 제외 */
+}
+
+/* ========== 사이드바 ========== */
+.sidebar {
+    width: 240px;
+    background-color: #f9f9f9;
+    border-right: 1px solid #ddd;
+    padding: 16px;
+}
+.sidebar ul {
+    list-style: none;
+}
+.sidebar li {
+    display: flex; /* 기본: 아이콘과 텍스트 좌측 배치 */
+    align-items: center; /* 수직 가운데 정렬 */
+    padding: 8px 0;
+    cursor: pointer;
+}
+.sidebar li:hover {
+    background-color: #eee;
+}
+/* 대형 화면용 사이드바 아이콘: 메뉴명 왼쪽 배치 */
+.sidebar li img.menu-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+/* 구분선 */
+.sidebar li.divider1,
+.sidebar li.divider2 {
+    padding: 8px 0;
+}
+.sidebar li.divider1 hr,
+.sidebar li.divider2 hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 8px 0;
+}
+
+/* ========== 메인 콘텐츠 ========== */
+.main-content {
+    flex: 1;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 기본 4열 (대형 화면) */
+    grid-gap: 16px;
+}
+.video-block {
+    background-color: #eee;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.video-block:hover {
+    background-color: #ddd;
+}
+
+/* ========== 반응형: 메인 콘텐츠 그리드 ========== */
+/* 1280px ~ 1535px: 영상 그리드 3열 */
+@media (max-width: 1535px) and (min-width: 1280px) {
+    .main-content {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+/* 768px ~ 1279px: 영상 그리드 2열 */
+@media (max-width: 1279px) and (min-width: 768px) {
+    .main-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+/* 767px 이하: 영상 그리드 1열 */
+@media (max-width: 767px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========== 반응형: 사이드바 ========== */
+/* [1] 대형 화면 (1536px 이상)
+     → 기본 사이드바: 전체 메뉴(그룹1, 구분선, 그룹2, 구분선, 그룹3)
+     (아이콘은 메뉴명 왼쪽에 배치됨) */
+@media (min-width: 1536px) {
+    /* 기본 사이드바 CSS 그대로 적용 */
+}
+
+/* [2] 중간 및 소형 중간 화면: 768px ~ 1535px
+     → 사이드바 너비 축소(120px)
+     → 새 레이아웃: 표시 메뉴는 그룹1(홈, Shorts, 구독)와 내 페이지(그룹2, mypage) 총 4개 항목
+     → 각 항목은 flex-direction: column; 적용해 아이콘이 메뉴명 위에 배치됨
+     → 내 페이지 항목은 기존 아이콘 숨기고 ::before 가상요소로 새 아이콘(MyPage_new.png) 표시 */
+@media (max-width: 1535px) and (min-width: 768px) {
+    .sidebar {
+        width: 120px;
+    }
+    /* 모든 사이드바 항목 숨김 */
+    .sidebar ul li {
+        display: none;
+    }
+    /* 그룹1 및 내 페이지 항목만 표시 */
+    .sidebar ul li.group1,
+    .sidebar ul li.mypage {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 16px;
+    }
+    /* 그룹1 항목: 아이콘 아래쪽 여백 조정 */
+    .sidebar ul li.group1 img.menu-icon {
+        margin-right: 0;
+        margin-bottom: 4px;
+    }
+    /* 내 페이지 항목: 기존 아이콘 숨기고 새 아이콘(::before)로 교체 */
+    .sidebar ul li.mypage img.menu-icon {
+        display: none;
+    }
+    .sidebar ul li.mypage::before {
+        content: "";
+        display: block;
+        width: 24px;
+        height: 24px;
+        background-image: url("./User.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-bottom: 4px;
+    }
+    /* 구분선 숨김 */
+    .sidebar ul li.divider1,
+    .sidebar ul li.divider2 {
+        display: none;
+    }
+}
+
+/* [3] 모바일 화면: 767px 이하 → 사이드바 전체 숨김 */
+@media (max-width: 767px) {
+    .sidebar {
+        display: none;
+    }
+}
